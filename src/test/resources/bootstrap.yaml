@@ -1,0 +1,13 @@
+embedded:
+  vault:
+    path: 'cubbyhole/motionms/viber'
+    secrets:
+      token: TOKEN
+      adminProfileId: AdminUid
+
+
+spring:
+  cloud:
+    vault:
+      uri: http://localhost:${embedded.vault.port}
+      token: ${embedded.vault.token}

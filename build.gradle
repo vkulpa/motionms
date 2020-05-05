@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
+
+    id 'io.freefair.lombok' version '5.1.0'
+    id 'com.diffplug.gradle.spotless' version '4.0.1'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    jcenter()
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
+
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-vault-config:2.2.3.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.integration:spring-integration-mqtt'
+    implementation 'com.viber:viber-bot:1.0.11'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.playtika.testcontainers:embedded-vault:1.70'
+}
+
+version = '1.0.0'
+application.mainClassName = 'com.vk.motion.Application'
+
+spotless {
+    java {
+        googleJavaFormat()
+    }
+}
+
+lombok {
+    config.put('lombok.anyConstructor.addConstructorProperties', 'true')
+    config.put('lombok.addLombokGeneratedAnnotation', 'true')
+}
+
+afterEvaluate {
+    tasks.getByName('test').dependsOn(tasks.getByName('spotlessApply'))
+    tasks.getByName('build').dependsOn(tasks.getByName('spotlessApply'))
+}

@@ -1,0 +1,47 @@
+management.endpoints.web:
+  exposure:
+    include: 'health'
+  base-path: '/'
+
+mqtt:
+  transport: 'tcp://'
+  host: 'localhost'
+  port: 1883
+  connection.timeout: 3
+  topics:
+    detection: 'motion/detected'
+    event: 'motion/event/#'
+    camera: 'motion/camera/#'
+
+motion:
+  web:
+    url: 'http://localhost:8282'
+    action:
+      restart: '/0/action/restart'
+    detection:
+      status: '/0/detection/status'
+  events:
+    ignore-less-that: 4
+    not-longer-than: 60
+
+storage:
+  basePath: '/home/motion'
+  images: '/pictures'
+  videos: '/videos'
+
+viberbot:
+  webhookUrl: 'https://motion-ms.kulpick.top/bot'
+  enabled: true
+  echo: false
+  name: 'Motion software console'
+  avatar: 'https://media-direct.cdn.viber.com/pg_download?pgtp=icons&dlid=0-04-0a-f6d79367553dabe812a1cfa0d3f3d7c898632d22b458acbab82e3c14ac3d71b5&fltp=jpg&imsz=0000'
+  adminProfile:
+    name: 'Subscriber'
+    avatar: 'http://dl-media.viber.com/1/share/2/long/bots/generic-avatar%402x.png'
+    language: 'ua'
+    country: 'UA'
+    api_version: 8
+
+server:
+  endpoint: 'https://motion-ms.kulpick.top'
+  port: 3000
